@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Site</title>
+
+
+  <style>
+
+    :root{
+      --clr1:#052b2f;
+      --clr2:#073438;
+      --clr3:#0e4b50;
+      --clr4:#2d8f85;
+      --clr5:#637c54;
+    }
+    body{
+      font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      background-color: var(--clr2);
+      
+    }
+    #user{
+      margin-top: 50px;
+      display:none;
+      width:400px;
+      position: absolute;
+      left:39%;
+      top:60%;
+    }
+    #city{
+      border-radius: 9px;
+      z-index: -1;
+     height: 30px;
+     width: 200px;
+     font-size:15px;
+     margin-bottom: 30px;
+     border-color: rgb(147, 224, 30);
+    }
+    #city::placeholder{
+      color: var(--clr5); 
+    }
+   img{
+    width:1.7%;
+    position:absolute ;
+    top:50.5%;
+    left: 59.8%;
+    cursor: pointer;
+   }
+   button{
+    width: fit-content;
+    
+   }
+    
+    #center{
+      
+      
+    
+    
+      
+      
+      width:280px;
+      
+      height: 150px;
+      padding:120px;
+    
+        border-width:1px;
+     
+      
+      display:flex;
+      margin-left:35%;
+      
+ 
+     
+      
+      flex-direction:column;
+      margin-top: 10%;
+ 
+    
+      justify-content: center;
+      align-items: center;
+      justify-items: center;
+       background: linear-gradient(235deg,magenta,cyan,greenyellow);
+
+      
+
+  
+  
+     
+    }
+
+  
+    #center:hover{
+      cursor: pointer;
+   
+      box-shadow: 0px 0px 1px 2.5px #052b2f,
+       0px 0px 3px 5px #073438,
+        0px 0px 6px 8px #2d8f85,
+        0px 0px 8px 12px #637c54;
+    }
+
+
+ 
+    .inrow1{
+      display: flex;
+      justify-content: center;
+      justify-items: center;
+
+      margin-left: 20%;
+      position: relative;
+      flex-direction: column;
+      line-height: 23px;
+      font-size: larger;
+      font-style: italic;
+      font-weight: bolder;
+      padding: 20px;
+      padding-left: -1px;
+      color: var(--clr4);
+     
+      
+      
+      
+      
+      
+
+
+      
+    
+    }
+      .inrow2{
+      display: flex;
+      justify-content: center;
+      justify-items: center;
+
+
+
+      
+    
+    }
+    .inrow1b{
+      padding-left: 50px;
+    }
+    ::placeholder{
+      padding-left: 45px;
+      font-style: italic;
+      font-weight: 550;
+
+    }
+   
+  </style>
+  
+</head>
+<body>
+  <div id="center">
+    <div class="inrow1"> Enter Country,City <span class="inrow1b"> State:</span></div>
+
+
+  <div  class="inrow2" >
+    <span><input type="text" id="city" placeholder="Enter Location"></span>
+    <!--Had Trouble Passing image in button-->
+    <!--Fix
+    1)Used Link as a button
+    2)Pass the Image inside the link tag -->
+    <span id="searchbtn"> <a type="button" onclick="show()"  ><img src="search.jpg"></a></span>
+     
+   
+  </div>
+  
+ 
+
+  </div>
+  <p id="user">The temperature in <span id="place"></span> is <span id="ittem"></span>°C and the weather is <span id="itdescp"></span>.</p>
+  
+</body>
+<script>
+
+  var temp;
+  var description;
+  function nextpage1(){    
+      location.href="raining.html"
+
+    
+    
+
+  }
+  function show(){
+    console.log(document.getElementById("city").value);
+    therest();
+    if (description.includes("rain")){
+        nextpage1();
+    }
+    
+    
+  }
+  function therest(){
+      // Replace YOUR_API_KEY with your own API key from OpenWeatherMap
+const API_KEY = 'ac9b7f67a5f1958e496d80999e0dd021';
+
+// Replace CITY_NAME with the name of the city you want to get the weather for
+const CITY_NAME = document.getElementById("city").value;
+
+// Construct the API URL
+const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${CITY_NAME}&appid=${API_KEY}`;
+
+// Fetch the weather data from the API
+fetch(apiUrl)
+  .then(response => response.json())
+  .then(data => {
+    // Extract the temperature and description from the data
+    temp = Math.round(data.main.temp - 273.15);
+    description = data.weather[0].description;
+
+    // Log the weather information to the console
+    
+    document.getElementById("place").innerHTML=CITY_NAME;
+    document.getElementById("ittem").innerHTML=temp;
+    document.getElementById("itdescp").innerHTML=description;
+    document.getElementById("user").style.display="inline";
+    
+    console.log(`The temperature in ${CITY_NAME} is ${temp}°C and the weather is ${description}.`);
+  })
+  .catch(error => {
+    console.error(`Error fetching weather data: ${error}`);
+  });
+
+  }
+  
+
+  </script>
+
+</html>
